@@ -50,7 +50,7 @@ public function envoyePlainte(EnvoyePlainteRequest $request)
         return response()->json(['success' => 'erreur', 'message' => $e->getMessage()], 500);
     }
 }
-
+//utiliser par chef
 public function recuperePlainte(){
     // Récupérer l'utilisateur connecté
     $user = auth()->user();
@@ -74,20 +74,22 @@ public function recuperePlainte(){
     });
     return response()->json($formatted);
 }
-
+//utilser par admin
 public function afficherPlainte(){
- // Récupérer l'utilisateur connecté
-    $user = auth()->user();
-    $plaintes = Plainte::all(['id','details', 'user_id','adresse','image','examiner','commune','created_at'])
-        ->map(function ($plainte) {
-            $plainte->created_at = Carbon::parse($plainte->created_at)->format('Y-m-d'); // Convertit en chaîne
-            return $plainte;
-        });
-   return response()->json($plaintes, 200, [], JSON_UNESCAPED_SLASHES);
+    $plaintes = Plainte::all(['id','details','code', 'user_id','adresse','image','examiner','commune','created_at']);
+   return response()->json($plaintes, 200);
 }
-
-
-
+//afficher une seule plainte
+public function detailPlainte($id){
+    $plainte = Plainte::select(['id','details','code', 'user_id','adresse','image','examiner','commune','created_at'])
+                ->where('id', $id)
+                ->first();
+       if (!$plainte) {
+        return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+             }
+     return response()->json($plainte);
+    }
+//utiliser par user
 public function afficherHistory()
 {
     $user = auth()->user();

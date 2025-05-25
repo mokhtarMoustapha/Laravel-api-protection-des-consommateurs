@@ -49,6 +49,7 @@ Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('utilisateur/{id}',[RegisterUserController::class,'afficherUser']);
   //afficher tous lesplaintes
   Route::get('plainte',[PlainteController::class,'afficherPlainte']);
+  Route::get('detailPlainte',[PlainteController::class,'detailPlainte']);
 });
 //supprimer user
 Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);

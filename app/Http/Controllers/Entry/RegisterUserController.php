@@ -83,7 +83,7 @@ class RegisterUserController extends Controller
     }
 //affichage  tous les users
  public function afficherUsers(){
-   $users = User::all(['id','name', 'tel','nni','signal','commune','role']);
+   $users = User::all(['id','name', 'tel','nni','signal','commune','role','blocquee']);
     return response()->json($users);
    }
 //affiche une seule user 
@@ -96,17 +96,8 @@ class RegisterUserController extends Controller
              }
      return response()->json($user);
     }
-//supprimer une seule user
- public function supprimerUser($id){
-    $user = User::find($id); // Recherche de l'utilisateur
-    if ($user) {
-        $user->delete(); // Suppression de l'utilisateur
-        return response()->json(['message' => 'Utilisateur supprimé avec succès']);
-    }
-    return response()->json(['message' => 'Utilisateur non trouvé'], 404);
-}
 
-
+//information sur utilisateur connecter
 public function utilisateurConnecter(){
    $user = auth()->user();
     $userData = User::select(['name', 'tel','nni','signal'])
