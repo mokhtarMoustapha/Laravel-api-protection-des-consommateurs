@@ -39,6 +39,7 @@ public function envoyePlainte(EnvoyePlainteRequest $request)
         $plainte->adresse = $request->adresse;
         $plainte->commune = $request->commune;
         $plainte->examiner = "Non examinee";
+        $plainte->valid = "valid";
         $plainte->code =PlainteController::genererCode();
 
         $plainte->save();
@@ -66,6 +67,7 @@ public function recuperePlainte(){
             'details'   => $plainte->details,
             'commune'   => $plainte->commune,
             'examiner'    => $plainte->examiner, 
+            'valid' =>  $plainte->valid,
             'image'     => $plainte->image,
             'adresse'   => $plainte->adresse,
             'user_name' => $plainte->user->name ?? null,
@@ -76,16 +78,16 @@ public function recuperePlainte(){
 }
 //utilser par admin
 public function afficherPlainte(){
-    $plaintes = Plainte::all(['id','details','code', 'user_id','adresse','image','examiner','commune','created_at']);
+    $plaintes = Plainte::all(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid', 'created_at']);
    return response()->json($plaintes, 200);
 }
 //afficher une seule plainte
 public function detailPlainte($id){
-    $plainte = Plainte::select(['id','details','code', 'user_id','adresse','image','examiner','commune','created_at'])
+    $plainte = Plainte::select(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid' ,'created_at'])
                 ->where('id', $id)
                 ->first();
        if (!$plainte) {
-        return response()->json(['message' => 'Utilisateur non trouvé'], 404);
+        return response()->json(['message' => 'Plainte non trouvé'], 404);
              }
      return response()->json($plainte);
     }

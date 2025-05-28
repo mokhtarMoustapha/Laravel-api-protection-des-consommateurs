@@ -17,7 +17,8 @@ class Plainte extends Model
         'adresse',
         'commune',
         'image',
-        'examiner'
+        'examiner',
+        'valid'
     ];
 
     public function user(){
