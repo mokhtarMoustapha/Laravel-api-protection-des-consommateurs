@@ -59,3 +59,6 @@ Route::get('loginAdmin',[AdminController::class,'login']);
 
 //modifier colonne signal
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
+
+//transforme citoyen vers chef
+Route::post('transformer/{id}',[SignalController::class, 'AjouterChef']);
