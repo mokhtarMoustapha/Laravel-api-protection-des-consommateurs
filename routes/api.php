@@ -8,6 +8,7 @@ use App\Http\Controllers\Entry\ForgetPasswordController;
 use App\Http\Controllers\Plainte\PlainteController;
 use App\Http\Controllers\Admin\SignalController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DemandeController;
 
 //register user(creation compte)
 Route::prefix('register/')->name('register.')->group(function (){
@@ -43,7 +44,10 @@ Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
      Route::get('myhistory',[PlainteController::class,'afficherHistory']);
     Route::post('logout',[RegisterUserController::class,'logout']);
     Route::post('donneeUser',[RegisterUserController::class,'utilisateurConnecter']);
+    Route::post('envoyeDemande',[DemandeController::class,'ajouterDemande']);
+    
 });
+
 
 //utiliser par ladmin////////////////////////////////////////////////////////////////////////////
 //Login pour Admin
@@ -53,9 +57,9 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('utilisateur',[RegisterUserController::class,'afficherUsers']);
   Route::get('utilisateur/{id}',[RegisterUserController::class,'afficherUser']);
-  //afficher tous lesplaintes
   Route::get('plainte',[PlainteController::class,'afficherPlainte']);
   Route::get('detailPlainte/{id}',[PlainteController::class,'detailPlainte']);
+  route::get('demande',[DemandeController::class,'afficherDemande']);
 });
 //modifier colonne signal
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
