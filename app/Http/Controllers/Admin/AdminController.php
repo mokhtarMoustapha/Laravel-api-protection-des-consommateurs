@@ -20,4 +20,11 @@ class AdminController extends Controller
         return response()->json(['message' => 'Mot de passe incorrect'], 401);
     }
 }
+
+//deconnexion de ladmin
+    public function logout(Request $request){
+        // Supprimer le token de l'utilisateur connecté
+        $request->user()->tokens()->delete();
+        return response()->json(['message' => 'Déconnexion réussie'], 200);
+    }
 }

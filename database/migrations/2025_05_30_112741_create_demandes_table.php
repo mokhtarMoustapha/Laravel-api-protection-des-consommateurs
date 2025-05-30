@@ -9,22 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-  public function up(): void
+    public function up(): void
     {
-        Schema::create('plaintes', function (Blueprint $table) {
+        Schema::create('demandes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            $table->text('details');
-            $table->string('image');
-            $table->string('adresse');
-            $table->string('examiner');
-            $table->string('commune');
-            $table->string('code');
-            $table->string('valid');
+            $table->stirng('commune');
+            $table->stirng('horaires');
             $table->timestamps();
-           
-         
         });
     }
 
@@ -33,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('plaintes');
+        Schema::dropIfExists('demandes');
     }
 };

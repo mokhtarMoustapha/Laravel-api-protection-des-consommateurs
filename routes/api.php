@@ -9,16 +9,15 @@ use App\Http\Controllers\Plainte\PlainteController;
 use App\Http\Controllers\Admin\SignalController;
 use App\Http\Controllers\Admin\AdminController;
 
-//register user
+//register user(creation compte)
 Route::prefix('register/')->name('register.')->group(function (){
     Route::post('11',[RegisterUserController::class,'register1']);
     Route::post('12',[RegisterUserController::class,'register2']);
     Route::post('13',[RegisterUserController::class,'registerComplete']);
  });
 
-//login
+//login user et chef
 Route::post('loginUser',[LoginUserController::class,'login']);
-
 //forgetPassword
 Route::prefix('forgetPassword/')->name('forgetpassword.')->group(function (){
     Route::post('envoyeCode',[ForgetPasswordController::class,'forgetPassword']);
@@ -33,17 +32,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return response()->json($request->user());
 });
 
-//utiliser par chef et citoyen
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('envoyePlainte', [PlainteController::class, 'envoyePlainte']);
+//utiliser par chef
+Route::middleware(['auth:sanctum', 'chef'])->group(function () {
     Route::post('recuperePlainte', [PlainteController::class, 'recuperePlainte']);
+    Route::post('logout',[RegisterUserController::class,'logout']);
+});
+//utiliser par citoyen
+Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
+    Route::post('envoyePlainte', [PlainteController::class, 'envoyePlainte']);
      Route::get('myhistory',[PlainteController::class,'afficherHistory']);
     Route::post('logout',[RegisterUserController::class,'logout']);
     Route::post('donneeUser',[RegisterUserController::class,'utilisateurConnecter']);
 });
 
 //utiliser par ladmin////////////////////////////////////////////////////////////////////////////
+//Login pour Admin
+Route::get('loginAdmin',[AdminController::class,'login']);
 //afficher utilisateur et tous les utilisateurs 
+Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('utilisateur',[RegisterUserController::class,'afficherUsers']);
   Route::get('utilisateur/{id}',[RegisterUserController::class,'afficherUser']);
@@ -51,14 +57,13 @@ Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('plainte',[PlainteController::class,'afficherPlainte']);
   Route::get('detailPlainte/{id}',[PlainteController::class,'detailPlainte']);
 });
-//supprimer user
-Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);
-
-//Login pour Admin
-Route::get('loginAdmin',[AdminController::class,'login']);
-
 //modifier colonne signal
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
-
 //transforme citoyen vers chef
 Route::post('transformer/{id}',[SignalController::class, 'AjouterChef']);
+});
+// //supprimer user
+// Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);
+
+
+
