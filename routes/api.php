@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SignalController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\DemandeController;
 use App\Http\Controllers\CHEF\RapportController;
+use App\Http\Controllers\CHEF\ExaminationController;
 
 //register user(creation compte)
 Route::prefix('register/')->name('register.')->group(function (){
@@ -39,6 +40,9 @@ Route::middleware(['auth:sanctum', 'chef'])->group(function () {
     Route::post('recuperePlainte', [PlainteController::class, 'recuperePlainte']);
     Route::post('logout',[RegisterUserController::class,'logout']);
     Route::post('envoyeRapport',[RapportController::class,'envoyeRapport']);
+    Route::post('traitementEncours/{id}',[ExaminationController::class,'traitementEncours']);
+    Route::post('plainteEncours',[ExaminationController::class,'plainteEncours']);
+    Route::post('traitementfinal/{id}',[ExaminationController::class,'traitementfinal']);
 });
 //utiliser par citoyen
 Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {

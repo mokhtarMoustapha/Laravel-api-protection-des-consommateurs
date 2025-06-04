@@ -38,7 +38,7 @@ public function envoyePlainte(EnvoyePlainteRequest $request)
         $plainte->details = $request->details;
         $plainte->adresse = $request->adresse;
         $plainte->commune = $request->commune;
-        $plainte->examiner = "Non examinee";
+        $plainte->examiner = "non examinee";
         $plainte->valid = "valid";
         $plainte->code =PlainteController::genererCode();
 
@@ -72,6 +72,7 @@ public function recuperePlainte(){
             'adresse'   => $plainte->adresse,
             'user_name' => $plainte->user->name ?? null,
             'telephone' => $plainte->user->tel ?? null,
+            'id_plainte'=>$plainte->id,
         ];
     });
     return response()->json($formatted);

@@ -22,6 +22,9 @@ class Plainte extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
+    }
+    public function chef(){
+        return $this->belongsTo(User::class, 'chef_id');
     }
 }

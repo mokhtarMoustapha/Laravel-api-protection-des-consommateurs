@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('plaintes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('chef_id');
+            $table->foreign('chef_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('details');
             $table->string('image');
             $table->string('adresse');
