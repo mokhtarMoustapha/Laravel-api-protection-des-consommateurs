@@ -20,7 +20,7 @@ Route::prefix('register/')->name('register.')->group(function (){
  });
 
 //login user et chef
-Route::post('loginUser',[LoginUserController::class,'login']);
+Route::post('loginUser',[LoginUserController::class,'loginUser']);
 //forgetPassword
 Route::prefix('forgetPassword/')->name('forgetpassword.')->group(function (){
     Route::post('envoyeCode',[ForgetPasswordController::class,'forgetPassword']);
@@ -56,9 +56,9 @@ Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
 
 //utiliser par ladmin////////////////////////////////////////////////////////////////////////////
 //Login pour Admin
-Route::post('loginAdmin',[AdminController::class,'login']);
+Route::post('loginAdmin',[AdminController::class,'loginAdmin']);
 //afficher utilisateur et tous les utilisateurs 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum','admin'])->group(function () {
 Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('utilisateur',[RegisterUserController::class,'afficherUsers']);
   Route::get('utilisateur/{id}',[RegisterUserController::class,'afficherUser']);
@@ -72,6 +72,7 @@ Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
 //transforme citoyen vers chef
 Route::post('transformer/{id}',[SignalController::class, 'AjouterChef']);
 });
+Route::post('ajouterAdmin',[AdminController::class, 'ajouterAdmin']);
 // //supprimer user
 // Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);
 

@@ -59,7 +59,7 @@ public function recuperePlainte(){
     $plaintes = Plainte::with('user:id,name,tel')
          ->where('commune', $user->commune)
         ->where('examiner', 'non examinee')
-        ->select('id', 'details', 'commune',"code", 'image', 'adresse', 'examiner', 'user_id')
+        ->select('id', 'details', 'commune',"code", 'image', 'adresse', 'examiner', 'user_id','chef_id')
         ->get();
  // Formatter la réponse pour retourner uniquement les champs voulus
     $formatted = $plaintes->map(function ($plainte) {
@@ -73,18 +73,20 @@ public function recuperePlainte(){
             'user_name' => $plainte->user->name ?? null,
             'telephone' => $plainte->user->tel ?? null,
             'id_plainte'=>$plainte->id,
+            'chef_id'=>$plainte->chef_id,
+            
         ];
     });
     return response()->json($formatted);
 }
 //utilser par admin
 public function afficherPlainte(){
-    $plaintes = Plainte::all(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid', 'created_at']);
+    $plaintes = Plainte::all(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid', 'created_at','chef_id']);
    return response()->json($plaintes, 200);
 }
 //afficher une seule plainte
 public function detailPlainte($id){
-    $plainte = Plainte::select(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid' ,'created_at'])
+    $plainte = Plainte::select(['id','details','code', 'user_id','adresse','image','examiner','commune', 'valid' ,'created_at','chef_id'])
                 ->where('id', $id)
                 ->first();
        if (!$plainte) {
@@ -98,7 +100,7 @@ public function afficherHistory()
     $user = auth()->user();
     // Récupérer uniquement les plaintes appartenant à cet utilisateur
     $plaintes = Plainte::where('user_id', $user->id)
-        ->select(['code', 'commune', 'image', 'examiner'])
+        ->select(['code', 'commune', 'image', 'examiner','created_at'])
         ->get()
         ->map(function ($plainte) {
             return [
@@ -106,6 +108,8 @@ public function afficherHistory()
                 'examiner' => $plainte->examiner,
                 'image'    => $plainte->image,
                 'code'     => $plainte->code,
+                'temps_creation'=>$plainte->created_at,
+                'valid'=>$plainte->valid,
             ];
         });
   return response()->json($plaintes);

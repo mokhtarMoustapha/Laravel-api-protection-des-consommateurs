@@ -10,7 +10,7 @@ use Hash;
 
 class LoginUserController extends Controller
 {
-     public function login(LoginRequest $request){
+     public function loginUser(LoginRequest $request){
         $donnee=[
             'tel'=>$request->tel,
             'password'=>$request->password,
