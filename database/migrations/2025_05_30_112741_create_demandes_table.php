@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('commune');
             $table->string('horaires');
+            $table->string('carte_identite');
+            $table->string('casier_judiciaire');
+            $table->string('extrait_naissance');
             $table->timestamps();
         });
     }

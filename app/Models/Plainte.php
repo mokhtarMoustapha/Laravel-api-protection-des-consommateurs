@@ -13,12 +13,14 @@ class Plainte extends Model
 
     protected $fillable=[
         'user_id',
+        'chef_id',
         'details',
         'adresse',
         'commune',
         'image',
-        'examiner',
-        'valid'
+        'etat',
+        'rapport'
+        
     ];
 
     public function user(){

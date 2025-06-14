@@ -20,13 +20,11 @@ return new class extends Migration
             $table->text('details');
             $table->string('image');
             $table->string('adresse');
-            $table->string('examiner');
+            $table->string('etat');
             $table->string('commune');
             $table->string('code');
-            $table->string('valid');
+            $table->string('rapport');
             $table->timestamps();
-           
-         
         });
     }
 

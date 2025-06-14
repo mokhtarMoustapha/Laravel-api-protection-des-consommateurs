@@ -70,7 +70,7 @@ Route::prefix('afficher/')->name('afficher.')->group(function (){
 //modifier colonne signal
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
 //transforme citoyen vers chef
-Route::post('transformer/{id}',[SignalController::class, 'AjouterChef']);
+Route::post('changer/role/{id}',[SignalController::class, 'modifierRole']);
 });
 Route::post('ajouterAdmin',[AdminController::class, 'ajouterAdmin']);
 // //supprimer user

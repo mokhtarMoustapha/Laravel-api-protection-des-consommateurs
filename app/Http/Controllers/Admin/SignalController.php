@@ -26,10 +26,9 @@ class SignalController extends Controller
         return response()->json(['message' => 'Signal mis à jour', 'user' => $user], 200);
 }
 //transforme user vers chef 
-public function AjouterChef(Request $request, $id){ 
+public function modifierRole(Request $request, $id){ 
     $user = User::find($id); 
     if (!$user) { return response()->json(['message' => 'User non trouvé'], 404); 
     }else{ $user->role=$request->role; $user->commune=$request->commune; $user->save(); 
         return response()->json(['message' => 'citoyen transformer vers chef', 'user' => $user], 200); } }
-
 }

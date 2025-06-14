@@ -11,7 +11,7 @@ class ExaminationController extends Controller
     public function traitementEncours($id){
         $user = auth()->user();
         $plainte=Plainte::find($id);
-        $plainte->examiner="en cours";
+        $plainte->etat="en cours";
         $plainte->chef_id=$user->id;
          if(!$plainte->save()){ 
         return response()->json(['message' => 'Erreur, lors de lenvoie'], 500);
@@ -25,16 +25,15 @@ class ExaminationController extends Controller
     $user = auth()->user();
     $plaintes = Plainte::with('user:id,name,tel')
          ->where('chef_id', $user->id)
-        ->where('examiner', 'en cours')
-        ->select('id', 'details', 'commune',"code", 'image', 'adresse', 'examiner', 'user_id','chef_id')
+        ->where('etat', 'en cours')
+        ->select('id', 'details', 'commune',"code", 'image', 'adresse', 'etat', 'user_id','chef_id')
         ->get();
  // Formatter la réponse pour retourner uniquement les champs voulus
     $formatted = $plaintes->map(function ($plainte) {
         return [
             'details'   => $plainte->details,
             'commune'   => $plainte->commune,
-            'examiner'    => $plainte->examiner, 
-            'valid' =>  $plainte->valid,
+            'etat'    => $plainte->etat, 
             'image'     => $plainte->image,
             'adresse'   => $plainte->adresse,
             'user_name' => $plainte->user->name ?? null,
@@ -47,7 +46,7 @@ class ExaminationController extends Controller
  public function traitementfinal($id ,Request $request){
         $user = auth()->user();
         $plainte=Plainte::find($id);
-        $plainte->examiner="examiner";
+        $plainte->etat=$request->etat;
          if(!$plainte->save()){ 
         return response()->json(['message' => 'Erreur, lors de lenvoie'], 500);
         } 
