@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         //$schedule->command('app:debloquer-utilisateurs')->daily();
-        $schedule->command('app:debloquer-utilisateurs')->cron('*/2 * * * *');
+        $schedule->command('app:debloquer-utilisateurs')->everyMinute();
     }
 
     /**
