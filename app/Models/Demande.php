@@ -17,6 +17,7 @@ class Demande extends Model
         'carte_identite',
         'casier_judiciaire',
         'extrait_naissance',
+        'rendez_vous'
     ];
 
     public function user(){

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Demande;
 use App\Http\Requests\User\DemandeRequest;
+use Carbon\Carbon;
 
 class DemandeController extends Controller
 {
@@ -15,7 +16,8 @@ class DemandeController extends Controller
         $demande->commune = $request->commune;
         $demande->horaires = $request->horaires;
         $demande->user_id = auth()->user()->id;
-
+        $demande->rendez_vous = Carbon::now()->addDays(7);
+        
         // Handle file uploads
         if ($request->hasFile('casier_judiciaire')) {
             $demande->casier_judiciaire = $request->file('casier_judiciaire')->store('documents', 'public');
@@ -33,7 +35,7 @@ class DemandeController extends Controller
 //recuperer demande
 public function afficherDemande()
 {
-    $demandes = Demande::get(['id', 'user_id', 'commune', 'horaires','carte_identite','casier_judiciaire','extrait_naissance'  ,'created_at']);
+    $demandes = Demande::get(['id', 'user_id', 'commune', 'horaires','carte_identite','casier_judiciaire','rendez_vous','extrait_naissance'  ,'created_at']);
 
     // Transformer le format de la réponse
     $demandes = $demandes->map(function ($demande) {
@@ -45,6 +47,7 @@ public function afficherDemande()
             'carte_identite' => $demande->carte_identite,
             'casier_judiciaire' => $demande->casier_judiciaire,
             'extrait_naissance' => $demande->extrait_naissance,
+            'rendez_vous' => $demande->rendez_vous,
             'temps_creation'=>$demande->created_at
         ];
     });

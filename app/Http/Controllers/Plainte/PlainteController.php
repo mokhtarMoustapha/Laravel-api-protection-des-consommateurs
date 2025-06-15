@@ -79,6 +79,14 @@ public function recuperePlainte(){
     });
     return response()->json($formatted);
 }
+//ajouter rapport
+public function ajouterRapport($id ,Request $request){
+    $plainte =Plainte::find($id);
+    $plainte->rapport=$request->rapport;
+    $plainte->save();
+    return response()->json(['success' => 'envoyer']);
+}
+
 //utilser par admin
 public function afficherPlainte(){
     $plaintes = Plainte::all(['id','details','code','rapport' ,'user_id','adresse','image','etat','commune', 'created_at','chef_id']);
