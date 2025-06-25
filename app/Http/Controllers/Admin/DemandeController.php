@@ -16,7 +16,17 @@ class DemandeController extends Controller
         $demande->commune = $request->commune;
         $demande->horaires = $request->horaires;
         $demande->user_id = auth()->user()->id;
-        $demande->rendez_vous = Carbon::now()->addDays(7);
+        
+        $aujourdHui = Carbon::now();
+       $jourDeLaSemaine = $aujourdHui->dayOfWeek; // 0 = Dimanche, 6 = Samedi
+        // Ajouter les jours en fonction du jour de la semaine
+        if ($jourDeLaSemaine === 0) { // Dimanche
+            $demande->rendez_vous = $aujourdHui->addDays(9);
+        } elseif ($jourDeLaSemaine === 6) { // Samedi
+            $demande->rendez_vous = $aujourdHui->addDays(8);
+        } else {
+            $demande->rendez_vous = $aujourdHui->addDays(7); // Valeur par défaut
+        }
         
         // Handle file uploads
         if ($request->hasFile('casier_judiciaire')) {

@@ -73,7 +73,7 @@ Route::prefix('afficher/')->name('afficher.')->group(function (){
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
 //transforme citoyen vers chef
 Route::post('changer/role/{id}',[SignalController::class, 'modifierRole']);
- });
+});
 Route::post('ajouterAdmin',[AdminController::class, 'ajouterAdmin']);
 // //supprimer user
-// Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);
+// Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);`
