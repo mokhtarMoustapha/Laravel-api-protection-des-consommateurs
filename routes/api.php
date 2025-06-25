@@ -59,20 +59,21 @@ Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
 //Login pour Admin
 Route::post('loginAdmin',[AdminController::class,'loginAdmin']);
 //afficher utilisateur et tous les utilisateurs 
-// Route::middleware(['auth:sanctum','admin'])->group(function () {
+Route::middleware(['auth:sanctum','admin'])->group(function () {
 Route::prefix('afficher/')->name('afficher.')->group(function (){
   Route::get('utilisateur',[RegisterUserController::class,'afficherUsers']);
   Route::get('utilisateur/{id}',[RegisterUserController::class,'afficherUser']);
   Route::get('plainte',[PlainteController::class,'afficherPlainte']);
   Route::get('detailPlainte/{id}',[PlainteController::class,'detailPlainte']);
   route::get('demande',[DemandeController::class,'afficherDemande']);
+  route::get('demande/{id}',[DemandeController::class,'afficherDemandeDetail']);
   route::get('rapport',[RapportController::class,'afficherRapports']);
 });
 //modifier colonne signal
 Route::put('signal/{id}', [SignalController::class, 'updateSignal']);
 //transforme citoyen vers chef
 Route::post('changer/role/{id}',[SignalController::class, 'modifierRole']);
-// });
+ });
 Route::post('ajouterAdmin',[AdminController::class, 'ajouterAdmin']);
 // //supprimer user
 // Route::delete('supprimer/{id}',[RegisterUserController::class,'supprimerUser']);

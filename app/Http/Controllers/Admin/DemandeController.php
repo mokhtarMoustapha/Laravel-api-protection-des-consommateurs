@@ -36,7 +36,6 @@ class DemandeController extends Controller
 public function afficherDemande()
 {
     $demandes = Demande::get(['id', 'user_id', 'commune', 'horaires','carte_identite','casier_judiciaire','rendez_vous','extrait_naissance'  ,'created_at']);
-
     // Transformer le format de la réponse
     $demandes = $demandes->map(function ($demande) {
         return [
@@ -55,5 +54,17 @@ public function afficherDemande()
     return response()->json($demandes, 200);
 }
 
+//detail demande
+public function afficherDemandeDetail($id)
+{
+    $demandes = Demande::select(['id', 'user_id', 'commune', 'horaires','carte_identite','casier_judiciaire','rendez_vous','extrait_naissance'  ,'created_at'])
+         ->where('id', $id)
+         ->first();
+    if (!$demandes) {
+        return response()->json(['message' => 'Demandes non trouvé'], 404);
+             }
+     
+     return response()->json($demandes, 200);
+}
 
 }

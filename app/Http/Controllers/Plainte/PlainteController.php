@@ -89,12 +89,12 @@ public function ajouterRapport($id ,Request $request){
 
 //utilser par admin
 public function afficherPlainte(){
-    $plaintes = Plainte::all(['id','details','code','rapport' ,'user_id','adresse','image','etat','commune', 'created_at','chef_id']);
+    $plaintes = Plainte::all(['id','details','code','rapport' ,'user_id','adresse','image','etat','commune', 'created_at','updated_at', 'chef_id']);
    return response()->json($plaintes, 200);
 }
 //afficher une seule plainte
 public function detailPlainte($id){
-    $plainte = Plainte::select(['id','details','code','rapport', 'user_id','adresse','image','etat','commune' ,'created_at','chef_id'])
+    $plainte = Plainte::select(['id','details','code','rapport', 'user_id','adresse','image','etat','commune' ,'created_at','updated_at','chef_id'])
                 ->where('id', $id)
                 ->first();
        if (!$plainte) {

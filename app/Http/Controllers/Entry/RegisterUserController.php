@@ -88,7 +88,7 @@ class RegisterUserController extends Controller
    }
 //affiche une seule user 
     public function afficherUser($id){
-    $user = User::select(['id','name', 'tel','nni','signal','commune',"created_at"])
+    $user = User::select(['id','name', 'tel','nni','signal','commune', 'role','blocquee',"created_at"])
                 ->where('id', $id)
                 ->first();
        if (!$user) {
