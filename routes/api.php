@@ -44,6 +44,8 @@ Route::middleware(['auth:sanctum', 'chef'])->group(function () {
     Route::post('plainteEncours',[ExaminationController::class,'plainteEncours']);
     Route::post('traitementfinal/{id}',[ExaminationController::class,'traitementfinal']);
     Route::post('ajouterRapport/{id}',[PlainteController::class,'ajouterRapport']);
+    Route::post('demission',[DemandeController::class,'Demission']); 
+     
 });
 //utiliser par citoyen
 Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
@@ -51,7 +53,8 @@ Route::middleware(['auth:sanctum', 'citoyen'])->group(function () {
      Route::get('myhistory',[PlainteController::class,'afficherHistory']);
     Route::post('logout',[RegisterUserController::class,'logout']);
     Route::post('donneeUser',[RegisterUserController::class,'utilisateurConnecter']);
-    Route::post('envoyeDemande',[DemandeController::class,'ajouterDemande']);   
+    Route::post('envoyeDemande',[DemandeController::class,'ajouterDemande']);
+      
 });
 
 
