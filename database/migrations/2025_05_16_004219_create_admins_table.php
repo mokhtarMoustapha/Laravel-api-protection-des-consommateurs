@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
+
 return new class extends Migration
 {
     /**
@@ -16,7 +18,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('password');
             $table->string('role');
-            $table->string('email');
+            $table->string('email')->unique();
+            $table->string('is_super_admin');
         });
     }
 

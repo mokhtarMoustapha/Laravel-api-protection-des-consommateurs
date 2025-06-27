@@ -13,6 +13,7 @@ class AdminController extends Controller
        $admin=new Admin();
        $admin->email=$request->email;
        $admin->role="ADMIN";
+       $admin->is_super_admin=false;
        $admin->password=Hash::make($request->password);
        if(!$admin->save()){
         return response()->json(['message' => 'erreur lors de lajout'], 401);
@@ -26,6 +27,7 @@ public function loginAdmin(Request $request){
             $success['token']=$admin->createToken(request()->userAgent())->plainTextToken;
             $success['success']=true;
             $success['message']="login success";
+            $success['superAdmin']=$admin->is_super_admin;
             return response()->json($success,200);
     } else {
         return response()->json(['message' => 'Mot de passe incorrect'], 401);

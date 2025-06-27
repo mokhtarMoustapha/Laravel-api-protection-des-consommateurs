@@ -21,7 +21,7 @@ class RegisterUserController extends Controller
         $this->smsService = $smsService;
     }
 
-    public function register1(Etape1RegisterRequest $request){
+    public function register1(Etape1RegisterRequest $request){ 
           $tel=$request->tel;
           
         try {
